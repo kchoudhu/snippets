@@ -1,0 +1,24 @@
+<snippet>
+	<content><![CDATA[
+#${1:database}.${2:major}.${3:minor}.${4:secrel}.sql
+drop function ${1:database}.schemamigrate(); create or replace function ${1:database}.schemamigrate() returns int as \$\$ declare ret int; 
+
+declare major  varchar(3)  := '${2:major}'; 
+declare minor  varchar(4)  := '${3:minor}'; 
+declare secrel varchar(4)  := '${4:secrel}'; 
+declare script varchar(50) := '${1:database}.${2:major}.${3:minor}.${4:secrel}.sql'; 
+
+begin
+if ${1:database}.schema_check( major, minor, secrel ) = 0 then
+
+/* insert your migration script here*/
+
+perform ${1:database}.schema_control_update( major, minor, secrel, script ); 
+end if; select ${1:database}.schemacheck( major, minor, secrel ) into ret; return ret; end; \$\$ language plpgsql; select ${1:database}.schemamigrate(); 
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<!-- <tabTrigger>sqlboilerplate</tabTrigger> -->
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.sql</scope> -->
+	<!-- <description>SQL schema boilerplate</description> -->
+</snippet>

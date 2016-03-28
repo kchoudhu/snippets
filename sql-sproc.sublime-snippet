@@ -1,0 +1,18 @@
+<snippet>
+	<content><![CDATA[
+drop function ${1:database}.${2:sprocname}( ${3:parameter_types} ); 
+create or replace function ${1:database}.${2:sprocname}(
+	${3:parameter_types}
+)
+returns ${4:rettype} as \$\$
+${5:variables}; 
+begin
+${6:sql}; 
+end; \$\$ language plpgsql; 
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<!-- <tabTrigger>hello</tabTrigger> -->
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
