@@ -14,7 +14,7 @@ if ${1:database}.schema_check( major, minor, secrel ) = 0 then
 /* insert your migration script here*/
 
 perform ${1:database}.schema_control_update( major, minor, secrel, script ); 
-end if; select ${1:database}.schemacheck( major, minor, secrel ) into ret; return ret; end; \$\$ language plpgsql; select ${1:database}.schemamigrate(); 
+end if; select ${1:database}.schema_check( major, minor, secrel ) into ret; return ret; end; \$\$ language plpgsql; select ${1:database}.schemamigrate(); 
 ]]></content>
 	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
 	<!-- <tabTrigger>sqlboilerplate</tabTrigger> -->
