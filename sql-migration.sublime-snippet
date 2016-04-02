@@ -1,7 +1,7 @@
 <snippet>
 	<content><![CDATA[
 #${1:database}.${2:major}.${3:minor}.${4:secrel}.sql
-drop function ${1:database}.schemamigrate(); create or replace function ${1:database}.schemamigrate() returns int as \$\$ declare ret int; 
+drop function if exists ${1:database}.schemamigrate(); create or replace function ${1:database}.schemamigrate() returns int as \$\$ declare ret int; 
 
 declare major  varchar(3)  := '${2:major}'; 
 declare minor  varchar(4)  := '${3:minor}'; 
