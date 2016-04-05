@@ -1,9 +1,9 @@
 <snippet>
 	<content><![CDATA[
 alter table ${1:database}.${2:srctbl}
-    add constraint fk_${3:tgttbl}_${4:tgtfield}
-    foreign key (${5:srcfield})
-        references ${1:database}.${3:tgttbl}(${4:tgtfield});
+    add constraint fk_${2:srctbl}_${4:srcfield}
+    foreign key (${4:srcfield})
+        references ${1:database}.${3:tgttbl}(${5:tgtfield});
 ]]></content>
 	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
 	<!-- <tabTrigger>hello</tabTrigger> -->
