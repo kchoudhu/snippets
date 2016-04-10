@@ -1,0 +1,32 @@
+##### Path changes
+export PATH=/opt/pkg/bin:$PATH
+
+##### Prompt style
+autoload -U promptinit
+promptinit
+prompt bart
+
+##### Editor
+export EDITOR=nano
+
+##### Includes
+source ~/.zsh_include/arcutil
+source ~/.zsh_include/arcssl
+source ~/.zsh_include/ansible
+source ~/.zsh_include/proxy
+
+##### Autogen crap
+## Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=100000
+SAVEHIST=10000000
+setopt appendhistory autocd extendedglob notify
+bindkey -e
+## End of lines configured by zsh-newuser-install
+#
+## The following lines were added by compinstall
+zstyle :compinstall filename '/Users/inara/.zshrc'
+autoload -Uz compinit
+compinit
+## End of lines added by compinstall
+##### End Autogen crap

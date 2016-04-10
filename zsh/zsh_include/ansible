@@ -1,0 +1,5 @@
+ans-initrole() {
+	mkdir files templates tasks handlers vars defaults meta
+	touch tasks/main.yml
+	echo "---" > tasks/main.yml
+}

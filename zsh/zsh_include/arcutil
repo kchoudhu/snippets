@@ -1,0 +1,31 @@
+# Money
+qrusd() {
+        printf %.2f $(echo "$1/3.6411" | bc -l)
+}
+usdqr() {
+        printf %.2f $(echo "$1*3.6411" | bc -l)
+}
+
+# Time 
+arcdate() {
+        clear
+        typeset -A tz
+        tz=("LAX" "America/Los_Angeles"\
+            "NYC" "America/New_York"\
+            "LDN" "Europe/London"\
+            "DOH" "Asia/Qatar"\
+            "BLR" "Asia/Kolkata"\
+            "DAC" "Asia/Dhaka"\
+            "HKG" "Asia/Hong_Kong"\
+            "TKO" "Asia/Tokyo")
+        if [[ -n $1 ]]; then 
+                tztime=`TZ=":$tz[$1]" date`
+                echo "$1 $tztime"
+        else
+                for c in "${(@k)tz}"; do
+                        tztime=`TZ=":$tz[$c]" date`
+                        echo "$c $tztime"
+                done
+        fi
+}
+
