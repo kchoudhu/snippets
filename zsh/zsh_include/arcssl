@@ -1,4 +1,7 @@
+
+
 arcssl() {
+        set -euf
         if [[ -z $1 ]] then
                 echo "Needs parameter: newcert or revoke"
                 exit 1
@@ -9,43 +12,61 @@ arcssl() {
         fi
         echo "Action: $1"
         echo "Host:   $2"
-        
+
         # Set up SAN silliness
         export CRTUNAME=$2
         export ALTNAME=DNS:$CRTUNAME
 
+        # Filenames
         export FILE_PK=svr_$CRTUNAME.key.pem
         export FILE_CSR=svr_$CRTUNAME.csr.pem
         export FILE_CERT=svr_$CRTUNAME.cert.pem
+        
 
-        # Clean out git repository, set up next run
-        git checkout -f
-        git clean -fd
-        mkdir newcerts
+        if [[ $1 == "newcert" ]] then
+            # Clean out git repository, set up next run
+            git checkout -f
+            git clean -fd
+            mkdir -p newcerts
 
-        echo "Creating private key"
-        openssl genrsa -out private/$FILE_PK 2048
+            echo "Creating private key"
+            openssl genrsa -out private/$FILE_PK 2048
 
-        echo "Creating CSR"
-        openssl req -config openssl.cnf -key private/$FILE_PK -new -sha256 -out csr/$FILE_CSR
+            echo "Creating CSR"
+            openssl req -config openssl.cnf -key private/$FILE_PK -new -sha256 -out csr/$FILE_CSR
 
-        echo "Signing CSR"
-        openssl ca -config openssl.cnf \
-                   -extensions server_cert -days 375 -notext -md sha256 \
-                   -in csr/$FILE_CSR \
-                   -out certs/$FILE_CERT        
+            echo "Signing CSR"
+            openssl ca -config openssl.cnf \
+                       -extensions server_cert -days 375 -notext -md sha256 \
+                       -in csr/$FILE_CSR \
+                       -out certs/$FILE_CERT        
 
-        echo "Cleaning up"
-        rm index.txt.attr
-        rm index.txt.old
-        rm serial.old
+            echo "Cleaning up"
+            rm index.txt.attr
+            rm index.txt.old
+            rm serial.old
 
-        echo "Staging git commit"
-        git add private/*
-        git add csr/*
-        git add certs/*
-        git add serial
-        git add index.txt
-        git status
+            echo "Staging git commit"
+            git add private/*
+            git add csr/*
+            git add certs/*
+            git add serial
+            git add index.txt
+            git status
+        fi 
+
+        if [[ $1 == "revoke" ]] then 
+            echo "Revoking certficiate"
+            openssl ca -config openssl.cnf \
+                       -revoke certs/$FILE_CERT
+
+            git rm private/$FILE_PK
+            git rm csr/$FILE_CSR
+            git rm certs/$FILE_CERT
+            rm index.txt.old
+            git add index.txt
+            git add index.txt.attr
+            rm ./newcerts/*
+        fi 
 }
 
