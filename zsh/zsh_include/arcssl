@@ -1,27 +1,33 @@
 
 
 arcssl() {
-        set -euf
+        set -eu
         if [[ -z $1 ]] then
                 echo "Needs parameter: newcert or revoke"
                 exit 1
         fi
-        if [[ -z $2 ]] then 
+        if [[ $2 != "svr" && $2 != "usr" ]] then
+                echo "Specify either usr or svr"
+                exit 1
+        fi 
+        if [[ -z $3 ]] then 
                 echo "No host specified"
                 exit 1
         fi
-        echo "Action: $1"
-        echo "Host:   $2"
+
+
+        echo "Action:     $1"
+        echo "Usr or Svr: $2"
+        echo "Host:       $3"
 
         # Set up SAN silliness
-        export CRTUNAME=$2
+        export CRTUNAME=$3
         export ALTNAME=DNS:$CRTUNAME
 
         # Filenames
-        export FILE_PK=svr_$CRTUNAME.key.pem
-        export FILE_CSR=svr_$CRTUNAME.csr.pem
-        export FILE_CERT=svr_$CRTUNAME.cert.pem
-        
+        export FILE_PK=$2_$CRTUNAME.key.pem
+        export FILE_CSR=$2_$CRTUNAME.csr.pem
+        export FILE_CERT=$2_$CRTUNAME.cert.pem
 
         if [[ $1 == "newcert" ]] then
             # Clean out git repository, set up next run
@@ -37,7 +43,7 @@ arcssl() {
 
             echo "Signing CSR"
             openssl ca -config openssl.cnf \
-                       -extensions server_cert -days 375 -notext -md sha256 \
+                       -extensions $2_cert -days 375 -notext -md sha256 \
                        -in csr/$FILE_CSR \
                        -out certs/$FILE_CERT        
 
@@ -63,10 +69,10 @@ arcssl() {
             git rm private/$FILE_PK
             git rm csr/$FILE_CSR
             git rm certs/$FILE_CERT
-            rm index.txt.old
             git add index.txt
             git add index.txt.attr
-            rm ./newcerts/*
+            rm -f ./newcerts/* || true
+            rm -f *.old || true
         fi 
 }
 
