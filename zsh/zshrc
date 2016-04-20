@@ -9,6 +9,11 @@ prompt bart
 ##### Editor
 export EDITOR=nano
 
+
+##### Aliases
+alias la="ls -al"
+alias lr="ls -ltr"
+
 ##### Includes
 source ~/.zsh_include/arcutil
 source ~/.zsh_include/arcssl
