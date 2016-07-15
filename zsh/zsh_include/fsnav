@@ -17,3 +17,7 @@ s_lc() {
 s_snippets() {
 	cd ~/src/snippets/$1
 }
+
+s_vendor() {
+	cd ~/src/vendor
+}
