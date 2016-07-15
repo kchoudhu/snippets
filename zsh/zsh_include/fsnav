@@ -1,11 +1,19 @@
+s_ans() {
+        cd ~/src/arcinfra
+}
+
+s_blog() {
+        cd ~/src/blog/work/$1
+}
+
+s_ca() {
+	cd ~/src/ca/ca_intermediate
+}
+
 s_lc() {
 	cd ~/src/levelcompute/$1
 }
 
-s_blog() {
-	cd ~/src/blog/work/content
-}
-
-s_ans() {
-	cd ~/src/arcinfra
+s_snippets() {
+	cd ~/src/snippets/$1
 }
