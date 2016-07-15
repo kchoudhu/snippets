@@ -1,0 +1,11 @@
+s_lc() {
+	cd ~/src/levelcompute/$1
+}
+
+s_blog() {
+	cd ~/src/blog/work/content
+}
+
+s_ans() {
+	cd ~/src/arcinfra
+}

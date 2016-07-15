@@ -18,6 +18,7 @@ alias lr="ls -ltr"
 source ~/.zsh_include/arcutil
 source ~/.zsh_include/arcssl
 source ~/.zsh_include/ansible
+source ~/.zsh_include/fsnav
 source ~/.zsh_include/proxy
 source ~/.zsh_include/nginx
 
