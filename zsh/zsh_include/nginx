@@ -1,0 +1,15 @@
+nginx_start() {
+	sudo nginx
+}
+
+nginx_stop() {
+	sudo nginx -s stop
+}
+
+nginx_log() {
+	cd ~/run/www/$1/log
+}
+
+nginx_doc() {
+	cd ~/run/www/$1/html
+}
