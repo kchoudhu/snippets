@@ -1,0 +1,5 @@
+[user]
+	email = kamil.choudhury@anserinae.net
+	name = Kamil Choudhury
+[core]
+	pager = less -r
