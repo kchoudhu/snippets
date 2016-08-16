@@ -5,5 +5,5 @@ if [ `uname` = "Darwin" ]; then
 	CFGDIR=~/Library/Application\ Support/Sublime\ Text\ 3
 fi
 
-cp *.sublime-snippet ${CFGDIR}/Packages/User/
-
+cp *.sublime-snippet  ${CFGDIR}/Packages/User/
+cp *.sublime-settings ${CFGDIR}/Packages/User/
