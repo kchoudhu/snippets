@@ -3,15 +3,15 @@ s_ans() {
 }
 
 s_blog() {
-        cd ~/src/blog/work/$1
+        cd ~/src/blog/content/$1
 }
 
 s_ca() {
-	cd ~/src/ca/ca_intermediate
+	cd ~/src/certauth/ca_intermediate
 }
 
 s_lc() {
-	cd ~/src/levelcompute/$1
+	cd ~/src/levelcompute/src/$1
 }
 
 s_snippets() {
