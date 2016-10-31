@@ -1,0 +1,50 @@
+<snippet>
+    <content><![CDATA[
+class LCG_${1:graphnode}(LCGraphRootNode):
+    # Global interface
+    @property
+    def is_unique(self): return ${2:unique}
+    @property
+    def dbcontext(self): return "${3:dbcontext}"
+
+    # ID
+    @property
+    def id(self): return self.${4:id}
+
+    # Foreign dependencies
+
+    # Serialization
+
+    # Other stuff
+    @property
+    def SQL(self):
+      return {
+        "read": {
+          "id" : td("""
+             SELECT *
+               FROM ${3:dbcontext}.${5:storetable}
+              WHERE ${4:id}=%s"""),
+          "bymarket" : td("""
+             SELECT *
+               FROM ${3:dbcontext}.${5:storetable}
+              WHERE market_id=%s""")
+        },
+        "update": {
+          "id" : td("""
+             UPDATE ${3:dbcontext}.${5:storetable}
+                SET %s
+              WHERE ${4:id}=%s""")
+        },
+        "insert": {
+          "id" : td("""
+        INSERT INTO ${3:dbcontext}.${5:storetable}(%s)
+             VALUES (%s)
+          RETURNING ${4:id}""")
+        }
+      }
+]]></content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <!-- <tabTrigger>hello</tabTrigger> -->
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <!-- <scope>source.python</scope> -->
+</snippet>
