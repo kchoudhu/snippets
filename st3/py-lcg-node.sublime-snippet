@@ -23,11 +23,7 @@ class LCG_${1:graphnode}(LCGraphRootNode):
           "id" : td("""
              SELECT *
                FROM ${3:dbcontext}.${5:storetable}
-              WHERE ${4:id}=%s"""),
-          "bymarket" : td("""
-             SELECT *
-               FROM ${3:dbcontext}.${5:storetable}
-              WHERE market_id=%s""")
+              WHERE ${4:id}=%s""")
         },
         "update": {
           "id" : td("""
