@@ -50,6 +50,7 @@ arcssl() {
 
             echo "Cleaning up"
             rm -rf certs/newcerts || true
+            rm inext.txt.old || true
             rm index.txt.attr || true
             rm index.txt.attr.old || true
             rm serial.old || true
@@ -79,4 +80,3 @@ arcssl() {
 
         echo "[Done]"
 }
-
