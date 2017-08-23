@@ -9,8 +9,8 @@ arcssl() {
         if [[ $2 != "svr" && $2 != "usr" ]] then
                 echo "Specify either usr or svr"
                 return 1
-        fi 
-        if [[ -z $3 ]] then 
+        fi
+        if [[ -z $3 ]] then
                 echo "No host specified"
                 return 1
         fi
@@ -45,7 +45,7 @@ arcssl() {
             openssl ca -config openssl.cnf \
                        -extensions $2_cert -days 375 -notext -md sha256 \
                        -in csr/$FILE_CSR \
-                       -out certs/$FILE_CERT        
+                       -out certs/$FILE_CERT
 
             echo "Cleaning up"
             rm -rf certs/newcerts || true
@@ -60,9 +60,9 @@ arcssl() {
             git add serial
             git add index.txt
             git status
-        fi 
+        fi
 
-        if [[ $1 == "revoke" ]] then 
+        if [[ $1 == "revoke" ]] then
             echo "Revoking certficiate"
             openssl ca -config openssl.cnf \
                        -revoke certs/$FILE_CERT
@@ -71,9 +71,8 @@ arcssl() {
             git rm csr/$FILE_CSR
             git rm certs/$FILE_CERT
             git add index.txt
-            git add index.txt.attr
             rm -f ./newcerts/* || true
             rm -f *.old || true
-        fi 
+        fi
 }
 
