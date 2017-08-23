@@ -29,10 +29,11 @@ arcssl() {
         export FILE_CSR=$2_$CRTUNAME.csr.pem
         export FILE_CERT=$2_$CRTUNAME.cert.pem
 
+        # Clean out git repository, set up next run
+        git checkout -f
+        git clean -fd
+
         if [[ $1 == "newcert" ]] then
-            # Clean out git repository, set up next run
-            git checkout -f
-            git clean -fd
             mkdir -p newcerts
 
             echo "Creating private key"
