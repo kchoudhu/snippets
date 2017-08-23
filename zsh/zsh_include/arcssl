@@ -71,8 +71,11 @@ arcssl() {
             git rm csr/$FILE_CSR
             git rm certs/$FILE_CERT
             git add index.txt
+            rm -f ./index.txt.attr || true
             rm -f ./newcerts/* || true
             rm -f *.old || true
         fi
+
+        echo "[Done]"
 }
 
