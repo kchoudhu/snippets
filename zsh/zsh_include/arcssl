@@ -4,15 +4,15 @@ arcssl() {
         set -eu
         if [[ -z $1 ]] then
                 echo "Needs parameter: newcert or revoke"
-                exit 1
+                return 1
         fi
         if [[ $2 != "svr" && $2 != "usr" ]] then
                 echo "Specify either usr or svr"
-                exit 1
+                return 1
         fi 
         if [[ -z $3 ]] then 
                 echo "No host specified"
-                exit 1
+                return 1
         fi
 
 
@@ -48,9 +48,10 @@ arcssl() {
                        -out certs/$FILE_CERT        
 
             echo "Cleaning up"
-            rm index.txt.attr
-            rm index.txt.old
-            rm serial.old
+            rm -rf certs/newcerts || true
+            rm index.txt.attr || true
+            rm index.txt.old || true
+            rm serial.old || true
 
             echo "Staging git commit"
             git add private/*
