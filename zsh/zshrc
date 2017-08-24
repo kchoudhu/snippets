@@ -1,5 +1,5 @@
 ##### Path changes
-export PATH=/opt/pkg/bin:/opt/pkg/sbin:$PATH
+export PATH=~/.local/bin:/opt/pkg/bin:/opt/pkg/sbin:$PATH
 
 ##### Prompt style
 autoload -U promptinit
