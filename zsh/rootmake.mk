@@ -130,7 +130,7 @@ devenv-bootstrap-python:
 
 	-mv .config/pip/pip.conf.tmp .config/pip/pip.conf
 
-devenv-boostrap-postgres: pgstop
+devenv-bootstrap-postgres: pgstop
 .if !exists(${pg_rundir}/PG_VERSION)
 	@rm -rf /tmp/.s.PGSQL*
 	@rm -rf ${pg_rundir}/*
