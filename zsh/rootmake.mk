@@ -1,4 +1,5 @@
 # Some binaries
+createdb     =/usr/local/bin/createdb
 rclone       =rclone sync -LP --checkers 32 --transfers 64
 pgctl        =/usr/local/bin/pg_ctl
 pip          =pip-3.6
@@ -11,6 +12,7 @@ rundir       =/usr/home/${USER}/run
 # Database variables
 pg_ver       =11
 pg_rundir    =${rundir}/db/pg${pg_ver}
+pg_snap     ?=1
 pg_snapname  =${db}-`date +"%Y-%m-%d-%H:%M:%S"`
 pg_zfsds     =zroot/db/${USER}-${pg_ver}-dev
 
@@ -19,8 +21,15 @@ pgcfgadd:
 	cp ${cfg} ${pg_rundir}
 .endif
 
+pginit: pgstart
+.if exists(${pg_rundir}/PG_VERSION)
+. if defined(db)
+	-${createdb} -h /tmp ${db}
+. endif
+.endif
+
 pgsnap:
-.if defined(db)
+.if defined(db) && ${pg_snap}==1
 	-@${psql} -d ${db} -c "select pg_start_backup('${pg_snapname}', true);"
 	-@sudo zfs snapshot ${pg_zfsds}@${pg_snapname}
 	-@${psql} -d ${db} -c 'select pg_stop_backup();'
@@ -32,7 +41,8 @@ pgstart: pgstop
 	-sudo zfs umount -f ${pg_zfsds}
 	sudo zfs mount ${pg_zfsds}
 	@${pgctl} -D ${pg_rundir} -l /tmp/logfile start
-	@sh -c 'cd ${pg_rundir} && pgbouncer ${pg_rundir}/pg_bouncer.ini --daemon'
+	-sh -c 'chmod 0755 ${pg_rundir}/pg_init.sh && ${pg_rundir}/pg_init.sh ${db}'
+	-sh -c 'cd ${pg_rundir} && pgbouncer ${pg_rundir}/pg_bouncer.ini --daemon'
 .endif
 
 pgstop: pgsnap
